@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { ThemeProvider } from "@mui/material";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LoginPage } from "./pages/LoginPage/LoginPage";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { theme } from "./theme";
+
 
 function App() {
-  const [status, setStatus] = useState("checking...");
-
-  useEffect(() => {
-    const appURL = import.meta.env.VITE_API_URL;
-    axios
-      .get(`${appURL}/health`)
-      .then((res) => setStatus(JSON.stringify(res.data)))
-      .catch((err) => setStatus("error: " + err.message));
-  }, []);
-
   return (
-    <div>
-      <h1>Crypto Investor Dashboard</h1>
-      <p>Server status: {status}</p>
-    </div>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/onboarding" element={<ProtectedRoute><div>Onboarding (TODO)</div></ProtectedRoute>} />
+          <Route path="/" element={<ProtectedRoute><div>Dashboard (TODO)</div></ProtectedRoute>} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
