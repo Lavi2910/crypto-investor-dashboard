@@ -61,6 +61,7 @@ export const LoginPage = () => {
                         variant="outlined"
                         label="Full name"
                         value={name}
+                        required
                         onChange={(e) => setName(e.target.value)}
                         style={styles.textFieldStyle()}
                     />
@@ -70,6 +71,7 @@ export const LoginPage = () => {
                     variant="outlined"
                     label="Email"
                     type="email"
+                    required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     style={styles.textFieldStyle()}
@@ -79,6 +81,7 @@ export const LoginPage = () => {
                     variant="outlined"
                     label="Password"
                     type="password"
+                    required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     style={styles.textFieldStyle()}

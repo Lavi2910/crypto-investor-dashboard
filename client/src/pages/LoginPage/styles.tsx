@@ -1,4 +1,4 @@
-import type { CSSProperties } from "@mui/material";
+import type { CSSProperties } from "react";
 import { theme } from "../../theme";
 
 export const containerStyle = () : CSSProperties => {
