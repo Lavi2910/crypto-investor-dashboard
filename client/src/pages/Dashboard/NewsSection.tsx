@@ -22,8 +22,7 @@ export const NewsSection = () => {
     api
       .get("/dashboard/news")
       
-      .then((res) =>   {console.log("news response:", res.data);
-        setNews(res.data.news ?? [])})
+      .then((res) => setNews(res.data.news ?? []))
       .catch(() => setError("Could not load news"))
       .finally(() => setLoading(false));
   }, []);
