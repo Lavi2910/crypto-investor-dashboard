@@ -50,7 +50,7 @@ export const LoginPage = () => {
                 )}
             </div>
 
-            <Tabs value={mode} onChange={(e, val) => setMode(val)}>
+            <Tabs value={mode} onChange={(_, val) => setMode(val)}>
                 <Tab label="Log in" value="login" />
                 <Tab label="Sign up" value="signup" />
             </Tabs>
