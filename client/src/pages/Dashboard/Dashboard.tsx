@@ -1,5 +1,6 @@
 import { SectionCard } from "../../components/SectionCard/SectionCard"
 import { PricesSection } from "./PricesSection"
+import { NewsSection } from "./NewsSection"
 import * as styles from './styles'
 
 export const Dashboard = () => {
@@ -10,9 +11,7 @@ export const Dashboard = () => {
             </div>
 
             <div style={styles.sectionStyle()}>
-                <SectionCard title="Market News" subtitle="Coming soon">
-                    <p>Market news will appear here.</p>
-                </SectionCard>
+                <NewsSection/>
             </div>
 
             <div style={styles.sectionStyle()}>
