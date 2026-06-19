@@ -3,6 +3,7 @@ import axios from "axios"
 import { COINS } from "../constants/coins";
 import Vote from "../models/Vote";
 import { AuthRequest } from "../middleware/auth";
+import { STATIC_NEWS } from "../constants/staticNews";
 
 const COINGECKO_URL = "https://api.coingecko.com/api/v3/coins/markets";
 export async function getPrices(req: Request, res: Response) {
@@ -65,4 +66,8 @@ export async function getVotes(req: AuthRequest, res: Response) {
     console.error("getVotes error:", err);
     res.status(500).json({ message: "Could not load votes" });
   }
+}
+
+export async function getNews(req: Request, res: Response){
+  res.json({news: STATIC_NEWS})
 }

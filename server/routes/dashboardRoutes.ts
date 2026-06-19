@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getPrices } from "../controllers/dashboardController";
+import { getNews, getPrices } from "../controllers/dashboardController";
 import { requireAuth } from "../middleware/auth";
 import { castVote } from "../controllers/dashboardController";
 import { getVotes } from "../controllers/dashboardController";
@@ -9,5 +9,6 @@ const router = Router()
 router.get("/prices", requireAuth, getPrices)
 router.post("/vote", requireAuth, castVote);
 router.get("/votes", requireAuth, getVotes);
+router.get("/news", requireAuth, getNews)
 
 export default router

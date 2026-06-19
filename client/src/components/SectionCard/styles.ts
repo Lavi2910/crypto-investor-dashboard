@@ -3,6 +3,10 @@ import { alpha } from "@mui/material/styles";
 import { theme } from "../../theme";
 
 export const card = (): CSSProperties => ({
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
+  boxSizing: "border-box",
   background: theme.palette.background.paper,
   border: `0.0625rem solid ${theme.palette.divider}`,
   borderRadius: "1rem",
@@ -42,7 +46,9 @@ export const subtitle = (): CSSProperties => ({
 });
 
 export const body = (): CSSProperties => ({
+  flex: 1,
   paddingTop: "0.5rem",
+  overflow: "auto",
 });
 
 export const footer = (): CSSProperties => ({
