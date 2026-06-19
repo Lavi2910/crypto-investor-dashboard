@@ -20,8 +20,7 @@ export const VoteButtons = ({ section }: VoteButtonsProps) => {
 
   const vote = async (newValue: number) => {
     const prev = value;
-    const next = value === newValue ? null : newValue;
-    setValue(next);
+    setValue(newValue);
     try {
       await api.post("/dashboard/vote", { section, value: newValue });
     } catch {
