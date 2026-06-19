@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./db";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from './routes/userRoutes'
+import dashboardRoutes from './routes/dashboardRoutes'
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use("/auth", authRoutes);
 app.use("/me", userRoutes)
+app.use("/dashboard", dashboardRoutes)
 
 app.get("/health", (req: Request, res: Response) => {
   res.json({ ok: true });
