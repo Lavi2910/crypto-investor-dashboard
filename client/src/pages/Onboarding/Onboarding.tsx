@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button, Alert } from "@mui/material";
 import * as styles from './styles'
 import { COINS } from "../../constants/coins";
-import { coinColors } from "../../theme";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
@@ -61,16 +60,21 @@ export const Onboarding = () => {
                 <p>Pick the assets you want in your daily briefing. You can change these anytime.</p>
 
                 <div style={styles.optionGrid()}>
-                    {COINS.map(({ symbol, name }) => {
+                    {COINS.map(({ symbol, name, color }) => {
                         const selected = assets.includes(symbol);
                         return (
-                            <div key={symbol} onClick={() => toggleAsset(symbol)} style={styles.optionCard(selected)}>
-                                <div style={styles.coinAvatar(coinColors[symbol])}>{symbol}</div>
+                            <button
+                                key={symbol}
+                                onClick={() => toggleAsset(symbol)}
+                                aria-pressed={selected}
+                                style={styles.optionCard(selected)}
+                            >
+                                <div style={styles.coinAvatar(color)}>{symbol}</div>
                                 <div>
                                     <div style={styles.optionLabel()}>{symbol}</div>
                                     <div style={styles.optionDescription()}>{name}</div>
                                 </div>
-                            </div>
+                            </button>
                         );
                     })}
                 </div>
@@ -84,9 +88,14 @@ export const Onboarding = () => {
                     {INVESTOR_OPTIONS.map((option) => {
                         const selected = investorType === option;
                         return (
-                            <div key={option} onClick={() => toggleInvestorType(option)} style={styles.optionCard(selected)}>
+                            <button
+                                key={option}
+                                onClick={() => toggleInvestorType(option)}
+                                aria-pressed={selected}
+                                style={styles.optionCard(selected)}
+                            >
                                 <div style={styles.optionLabel()}>{option}</div>
-                            </div>
+                            </button>
                         );
                     })}
                 </div>
@@ -100,9 +109,13 @@ export const Onboarding = () => {
                     {CONTENT_OPTIONS.map((option) => {
                         const selected = contentTypes.includes(option);
                         return (
-                            <div key={option} onClick={() => toggleContentType(option)} style={styles.optionCard(selected)}>
+                            <button 
+                            key={option} 
+                            onClick={() => toggleContentType(option)} 
+                            style={styles.optionCard(selected)} 
+                            aria-pressed={selected}>
                                 <div style={styles.optionLabel()}>{option}</div>
-                            </div>
+                            </button>
                         );
                     })}
                 </div>
