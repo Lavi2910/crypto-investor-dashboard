@@ -7,20 +7,19 @@ import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
 
 const INVESTOR_OPTIONS = ["HODLer", "Day Trader", "NFT Collector"];
-const CONTENT_OPTIONS = ["Market News", "Charts", "Social", "Fun"];
+const CONTENT_OPTIONS = ["Coin Prices", "Market News", "Crypto Meme"];
 
 
 
 export const Onboarding = () => {
     const navigate = useNavigate();
+    const { user, updateUser } = useAuth();
 
-    const [assets, setAssets] = useState<string[]>([]);
-    const [investorType, setInvestorType] = useState("");
-    const [contentTypes, setContentTypes] = useState<string[]>([]);
+    const [assets, setAssets] = useState<string[]>(user?.preferences?.assets ?? []);
+    const [investorType, setInvestorType] = useState(user?.preferences?.investorType ?? "");
+    const [contentTypes, setContentTypes] = useState<string[]>(user?.preferences?.contentTypes ?? []);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-
-    const { updateUser } = useAuth();
 
     const handleSubmit = async () => {
         setError("");

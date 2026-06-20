@@ -7,6 +7,11 @@ interface User {
   name: string;
   email: string;
   onboarded: boolean;
+  preferences?: {
+    assets: string[];
+    investorType: string;
+    contentTypes: string[];
+  };
 }
 
 interface AuthContextType {
