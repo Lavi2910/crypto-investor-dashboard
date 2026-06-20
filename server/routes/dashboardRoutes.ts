@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getNews, getPrices } from "../controllers/dashboardController";
+import { getInsight, getNews, getPrices } from "../controllers/dashboardController";
 import { requireAuth } from "../middleware/auth";
 import { castVote } from "../controllers/dashboardController";
 import { getVotes } from "../controllers/dashboardController";
@@ -12,5 +12,6 @@ router.post("/vote", requireAuth, castVote);
 router.get("/votes", requireAuth, getVotes);
 router.get("/news", requireAuth, getNews)
 router.get("/meme", requireAuth, getMeme);
+router.get("/insight", requireAuth, getInsight)
 
 export default router

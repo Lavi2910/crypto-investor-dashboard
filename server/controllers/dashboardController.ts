@@ -4,13 +4,21 @@ import { COINS } from "../constants/coins";
 import Vote from "../models/Vote";
 import { AuthRequest } from "../middleware/auth";
 import { STATIC_NEWS } from "../constants/staticNews";
+import User from "../models/User";
 import { STATIC_MEMES } from "../constants/staticMemes";
+import { STATIC_INSIGHTS } from "../constants/staticInsights";
 
 
 const COINGECKO_URL = "https://api.coingecko.com/api/v3/coins/markets";
-export async function getPrices(req: Request, res: Response) {
-  const ids = COINS.map((coin => coin.geckoId)).join(",")
+export async function getPrices(req: AuthRequest, res: Response) {
   try {
+    const user = await User.findById(req.userId)
+    const watchedAssets = user?.preferences?.assets
+    const coins = watchedAssets?.length
+      ? COINS.filter((coin) => watchedAssets.includes(coin.symbol))
+      : COINS
+    const ids = coins.map((coin) => coin.geckoId).join(",")
+
     const apiKey = process.env.COINGECKO_API_KEY;
     const response = await axios.get(COINGECKO_URL,
       {
@@ -96,4 +104,39 @@ export async function getMeme(req: Request, res: Response) {
     const fallback = STATIC_MEMES[Math.floor(Math.random() * STATIC_MEMES.length)];
     res.json({ meme: fallback, source: "static" });
   }
+}
+
+
+
+export async function getInsight(req: AuthRequest, res: Response) {
+  try{
+    const user = await User.findById(req.userId)
+    if (!user) return res.status(404).json({message: "User not found"})
+    
+    const prefs = user.preferences
+    const prompt = `You are a crypto advisor. Give a short, friendly daily insight (2-3 sentences) for a ${prefs.investorType || "crypto investor"} interested in ${prefs.assets?.join(", ") || "crypto"}. They like ${prefs.contentTypes?.join(", ") || "market news"} content. Be encouraging and practical. Do not give financial guarantees.`
+
+    const response = await axios.post(
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        model: "openai/gpt-oss-20b:free",
+        messages: [{ role: "user", content: prompt }],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    const text = response.data.choices?.[0]?.message?.content?.trim()
+    if (!text) throw new Error("Empty LLM response");
+
+    res.json({insight: text})
+  }catch(err){
+    console.error("getInsight error:", err)
+    const fallback = STATIC_INSIGHTS[Math.floor(Math.random() * STATIC_INSIGHTS.length)]
+    res.json({insight: fallback})
+  }
+
 }
