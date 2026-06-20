@@ -2,6 +2,7 @@ import { SectionCard } from "../../components/SectionCard/SectionCard"
 import { PricesSection } from "./PricesSection"
 import { NewsSection } from "./NewsSection"
 import * as styles from './styles'
+import { MemeSection } from "./MemeSection"
 
 export const Dashboard = () => {
     return (
@@ -15,9 +16,7 @@ export const Dashboard = () => {
             </div>
 
             <div style={styles.sectionStyle()}>
-                <SectionCard title="Charts" subtitle="Coming soon">
-                    <p>Charts will appear here.</p>
-                </SectionCard>
+                <MemeSection/>
             </div>
 
             <div style={styles.sectionStyle()}>

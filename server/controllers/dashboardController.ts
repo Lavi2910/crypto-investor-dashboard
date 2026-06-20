@@ -4,6 +4,8 @@ import { COINS } from "../constants/coins";
 import Vote from "../models/Vote";
 import { AuthRequest } from "../middleware/auth";
 import { STATIC_NEWS } from "../constants/staticNews";
+import { STATIC_MEMES } from "../constants/staticMemes";
+
 
 const COINGECKO_URL = "https://api.coingecko.com/api/v3/coins/markets";
 export async function getPrices(req: Request, res: Response) {
@@ -68,6 +70,30 @@ export async function getVotes(req: AuthRequest, res: Response) {
   }
 }
 
-export async function getNews(req: Request, res: Response){
-  res.json({news: STATIC_NEWS})
+export async function getNews(req: Request, res: Response) {
+  res.json({ news: STATIC_NEWS })
+}
+
+export async function getMeme(req: Request, res: Response) {
+  try {
+    const response = await axios.get("https://meme-api.com/gimme/cryptomemes/50");
+    const memes = response.data.memes;
+
+    console.log("memes count:", memes?.length, "| status:", response.status);
+
+    const pick = memes[Math.floor(Math.random() * memes.length)];
+
+    const meme = {
+      id: pick.postLink ?? "live",
+      title: pick.title ?? "Crypto meme",
+      url: pick.url,
+    };
+
+    if (!meme.url) throw new Error("No meme url");
+    res.json({ meme, source: "live" });
+  } catch (err) {
+    console.error("getMeme error:", err);
+    const fallback = STATIC_MEMES[Math.floor(Math.random() * STATIC_MEMES.length)];
+    res.json({ meme: fallback, source: "static" });
+  }
 }
